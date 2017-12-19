@@ -7,6 +7,7 @@ namespace ds {
 /*
  * Segment Tree class where
  * T - is the type of Node in segment Tree
+ * F - the merge function for two nodes of type T
  */
 template <typename T, typename F>
 class SegmentTree {
@@ -44,10 +45,11 @@ class SegmentTree {
 		~SegmentTree();
 };
 
-		/* class SegmentTree */
+		/////////////////////
+		//class SegmentTree 
+		/////////////////////
 
 // Constructors
-
 template <typename T, typename F>
 SegmentTree<T, F>::SegmentTree(F func)
 : N(100001)
@@ -66,7 +68,6 @@ SegmentTree<T, F>::SegmentTree(int n, F func)
 {
 	L = 1;
 	R = N;
-
 }
 
 template <typename T, typename F>
@@ -83,7 +84,12 @@ SegmentTree<T, F>::SegmentTree(I l, I r, F func)
 }
 
 // Build functions
-// Assuming I is a random access iterator type
+
+/* Builds the Tree
+ * l - iterator to the begining of array
+ * r - iterator to the end of the aarray (inclusive)
+ * i - index of the segement tree (defaults to 1)
+ */
 template <typename T, typename F>
 template <typename I>
 void SegmentTree<T, F>::build(I l, I r, int i) {
@@ -101,13 +107,23 @@ void SegmentTree<T, F>::build(I l, I r, int i) {
 }
 
 // Query functions
-// Query wrapper
+/* Query wrapper to put default values of L and R
+ * l - the begining of range to query
+ * r - the end of the range to query
+ */
 template <typename T, typename F>
 T SegmentTree<T, F>::query(int l, int r)
 {
 	return doActualQuery(l, r, L, R, 1);
 }
 
+/* The recursive function to query the tree
+ * l - the begining of range to query
+ * r - the end of rrange to query
+ * L - the begining of the current window
+ * R - the end of the current window
+ * i - current index in the tree
+ */
 template <typename T, typename F>
 T SegmentTree<T, F>::doActualQuery(int l, int r, int L, int R, int i)
 {
@@ -159,7 +175,9 @@ SegmentTree<T, F>::~SegmentTree()
 }
 
 
-/* wrapper make_ functions */
+/* wrapper make_ functions
+ * to build tree easily
+ */
 
 template <typename T, typename F = std::plus<T>>
 SegmentTree<T, F>make_segmentTree(F mergeFunc = F())
