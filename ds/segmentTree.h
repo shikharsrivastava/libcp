@@ -34,6 +34,12 @@ class SegmentTree {
 		T doActualQuery(int l, int r, int L, int R, int i = 1);
 		T query(int l, int r);
 
+		// Getters
+		const int& getArraySize();
+
+		// void Setters
+		void setArraySize(int n);
+		void setFunction(F func);
 		// Destructors
 		~SegmentTree();
 };
@@ -121,6 +127,29 @@ T SegmentTree<T, F>::doActualQuery(int l, int r, int L, int R, int i)
 	}
 }
 
+// Getters
+template <typename T, typename F>
+const int& SegmentTree<T, F>::getArraySize()
+{
+	return N;
+}
+
+//Setters
+template <typename T, typename F>
+void SegmentTree<T, F>::setArraySize(int n)
+{
+	N = n;
+	tree.resize(4*N+1);
+	return;
+}
+
+template <typename T, typename F>
+void SegmentTree<T, F>::setFunction(F func)
+{
+	mergeFunc = func;
+	return;
+}
+
 // Destructors
 
 template<typename T, typename F>
@@ -132,17 +161,24 @@ SegmentTree<T, F>::~SegmentTree()
 
 /* wrapper make_ functions */
 
+template <typename T, typename F>
+SegmentTree<T, F>make_segmentTree(F mergeFunc)
+{
+	return SegmentTree<T, F>(mergeFunc);
+}
+	
+template <typename T, typename F>
+SegmentTree<T, F> make_segmentTree(F mergeFunc, int n)
+{
+	return SegmentTree<T, F>(mergeFunc, n);
+}
+
 template <typename T, typename I, typename F>
 SegmentTree<T, F> make_segmentTree(I l, I r, F mergeFunc)
 {
 	return SegmentTree<T, F>(l, r, mergeFunc);
 }
 
-template <typename T, typename F>
-SegmentTree<T, F> make_segmentTree(F mergeFunc, int n)
-{
-	return SegmentTree<T, F>(mergeFunc, n);
-}
 
 }
 }
