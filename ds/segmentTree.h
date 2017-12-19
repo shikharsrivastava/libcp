@@ -1,7 +1,7 @@
 #ifndef SEGMENTTREE
 #define SEGMENTTREE
 #include<bits/stdc++.h>
-
+#include<functional>
 namespace libcp {
 namespace ds {
 /*
@@ -22,7 +22,7 @@ class SegmentTree {
 	public:
 		// Constructors
 		SegmentTree(F func);
-		SegmentTree(F func, int n);
+		SegmentTree(int n, F func);
 		template <typename I>
 		SegmentTree(I l, I r, F func);
 		
@@ -59,7 +59,7 @@ SegmentTree<T, F>::SegmentTree(F func)
 
 }
 template <typename T, typename F>
-SegmentTree<T, F>::SegmentTree(F func, int n)
+SegmentTree<T, F>::SegmentTree(int n, F func)
 : N(n)
 , mergeFunc(func)
 , tree(std::vector<T>(4*N+1))
@@ -161,20 +161,20 @@ SegmentTree<T, F>::~SegmentTree()
 
 /* wrapper make_ functions */
 
-template <typename T, typename F>
-SegmentTree<T, F>make_segmentTree(F mergeFunc)
+template <typename T, typename F = std::plus<T>>
+SegmentTree<T, F>make_segmentTree(F mergeFunc = F())
 {
 	return SegmentTree<T, F>(mergeFunc);
 }
-	
-template <typename T, typename F>
-SegmentTree<T, F> make_segmentTree(F mergeFunc, int n)
+
+template <typename T, typename F = std::plus<T>>
+SegmentTree<T, F> make_segmentTree(int n, F mergeFunc = F())
 {
-	return SegmentTree<T, F>(mergeFunc, n);
+	return SegmentTree<T, F>(n, mergeFunc);
 }
 
-template <typename T, typename I, typename F>
-SegmentTree<T, F> make_segmentTree(I l, I r, F mergeFunc)
+template <typename T, typename I, typename F = std::plus<T>>
+SegmentTree<T, F> make_segmentTree(I l, I r, F mergeFunc = F())
 {
 	return SegmentTree<T, F>(l, r, mergeFunc);
 }
