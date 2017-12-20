@@ -12,7 +12,10 @@ template <typename T>
 class Trie {
 
 	public:
-	
+	typedef int 	size_type;
+	typedef Node 	node_type;
+
+	private:
 	struct Node
 	{
 		std::unordered_map<T, int> 	next;
@@ -26,15 +29,13 @@ class Trie {
 
 	};
 
-	typedef int 	size_type;
-	typedef Node 	node_type;
-
 	size_type 				N;
 	std::vector<node_type>	trie;
 	size_type				object_count;
 	size_type				index;
-	// constructors
 	
+	public:
+	// constructors	
 	Trie();
 	Trie(size_type n);
 
