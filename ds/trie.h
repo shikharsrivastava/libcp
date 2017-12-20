@@ -17,10 +17,11 @@ class Trie {
 	{
 		std::unordered_map<T, int> 	next;
 		int 						finished;
-
+		int 						count;
 		Node()
 		: next()
 		, finished(0)
+		, count(0)
 		{}
 
 	};
@@ -92,8 +93,8 @@ void Trie<T>::insert(I s, I e, F equalFunc)
 	int ind = 0;
 	while(s != e && trie[ind].next.count(*s))
 	{
-		tree[ind].
 		ind = trie[ind].next[*s];
+		trie[ind].count++;
 		s++;
 	}
 
@@ -101,6 +102,7 @@ void Trie<T>::insert(I s, I e, F equalFunc)
 	{
 		trie[ind].next[*s] = ++index;
 		ind = index;
+		trie[ind].count++;
 		++s;
 	}
 	trie[ind].finished++;
@@ -111,6 +113,17 @@ template <typename T>
 template <typename I, typename F>
 void Trie<T>::remove(I s, I e, F equalFunc)
 {
+	if(!contains(s, e))
+		return;
+
+	int ind = 0;
+	while(s != e && trie[ind].next.count(*s))
+	{
+		ind = trie[ind].next[*s];
+		trie[ind].count--;
+		s++;
+	}
+	trie[ind].finished--;
 
 }
 

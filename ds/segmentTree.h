@@ -12,35 +12,41 @@ namespace ds {
 template <typename T, typename F>
 class SegmentTree {
 
+	public:
+		typedef int size_type;
+		typedef int index_type;
+		typedef F	func_type;
+
+
 	private:
-		int 			size;
-		int 			N;
-		std::vector<T>	tree;
-		int 			L;
-		int 			R;
-		F				mergeFunc;
+		size_type 			size;
+		size_type 			N;
+		std::vector<T>		tree;
+		index_type 			L;
+		index_type 			R;
+		func_type			mergeFunc;
 		
 	public:
 		// Constructors
-		SegmentTree(F func);
-		SegmentTree(int n, F func);
+		SegmentTree(func_type func);
+		SegmentTree(size_type n, func_type func);
 		template <typename I>
-		SegmentTree(I l, I r, F func);
+		SegmentTree(I l, I r, func_type func);
 		
 		// build functions
 		template <typename I>
-		void build(I l, I r, int i = 1);
+		void build(I l, I r, size_type i = 1);
 		
 		// query functions
-		T doActualQuery(int l, int r, int L, int R, int i = 1);
-		T query(int l, int r);
+		T doActualQuery(index_type l, index_type r, index_type L, index_type R, index_type i = 1);
+		T query(index_type l, index_type r);
 
 		// Getters
-		const int& getArraySize();
+		const size_type& getArraySize();
 
 		// void Setters
-		void setArraySize(int n);
-		void setFunction(F func);
+		void setArraySize(size_type n);
+		void setFunction(func_type func);
 		// Destructors
 		~SegmentTree();
 };
@@ -51,7 +57,7 @@ class SegmentTree {
 
 // Constructors
 template <typename T, typename F>
-SegmentTree<T, F>::SegmentTree(F func)
+SegmentTree<T, F>::SegmentTree(func_type func)
 : N(100001)
 , mergeFunc(func)
 , tree(std::vector<T>(4*N+1))
@@ -61,7 +67,7 @@ SegmentTree<T, F>::SegmentTree(F func)
 
 }
 template <typename T, typename F>
-SegmentTree<T, F>::SegmentTree(int n, F func)
+SegmentTree<T, F>::SegmentTree(size_type n, func_type func)
 : N(n)
 , mergeFunc(func)
 , tree(std::vector<T>(4*N+1))
@@ -72,7 +78,7 @@ SegmentTree<T, F>::SegmentTree(int n, F func)
 
 template <typename T, typename F>
 template <typename I>
-SegmentTree<T, F>::SegmentTree(I l, I r, F func)
+SegmentTree<T, F>::SegmentTree(I l, I r, func_type func)
 : N(r-l+1)
 , tree(std::vector<T>(4*N+1))
 , mergeFunc(func)
@@ -92,7 +98,7 @@ SegmentTree<T, F>::SegmentTree(I l, I r, F func)
  */
 template <typename T, typename F>
 template <typename I>
-void SegmentTree<T, F>::build(I l, I r, int i) {
+void SegmentTree<T, F>::build(I l, I r, size_type i) {
 	
 	if (l == r)
 	{
@@ -112,7 +118,7 @@ void SegmentTree<T, F>::build(I l, I r, int i) {
  * r - the end of the range to query
  */
 template <typename T, typename F>
-T SegmentTree<T, F>::query(int l, int r)
+T SegmentTree<T, F>::query(index_type l, index_type r)
 {
 	return doActualQuery(l, r, L, R, 1);
 }
@@ -125,7 +131,7 @@ T SegmentTree<T, F>::query(int l, int r)
  * i - current index in the tree
  */
 template <typename T, typename F>
-T SegmentTree<T, F>::doActualQuery(int l, int r, int L, int R, int i)
+T SegmentTree<T, F>::doActualQuery(index_type l, index_type r, index_type L, index_type R, index_type i)
 {
 	if(l > R || r < L)
 	{
@@ -145,14 +151,14 @@ T SegmentTree<T, F>::doActualQuery(int l, int r, int L, int R, int i)
 
 // Getters
 template <typename T, typename F>
-const int& SegmentTree<T, F>::getArraySize()
+const typename SegmentTree<T, F>::size_type& SegmentTree<T, F>::getArraySize()
 {
 	return N;
 }
 
 //Setters
 template <typename T, typename F>
-void SegmentTree<T, F>::setArraySize(int n)
+void SegmentTree<T, F>::setArraySize(size_type n)
 {
 	N = n;
 	tree.resize(4*N+1);
@@ -160,7 +166,7 @@ void SegmentTree<T, F>::setArraySize(int n)
 }
 
 template <typename T, typename F>
-void SegmentTree<T, F>::setFunction(F func)
+void SegmentTree<T, F>::setFunction(func_type func)
 {
 	mergeFunc = func;
 	return;
