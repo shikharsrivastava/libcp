@@ -4,7 +4,7 @@ using namespace std;
 using namespace libcp::ds;
 
 /*
- * Simple example to make a segment tree
+ * Simple example to make BIT
  * on an integer array
  * */
 int main()
@@ -13,13 +13,13 @@ int main()
 	int n;
 	cin >> n;
 
-	// The array
+	// The array. The 'SomeType' in 'int'
 	vector<int> arr(n);
 
 	for(int i=0;i<n;i++)
 		cin >> arr[i];
 
-	// building the segment tree on the array. The Node type is 'int'
+	// building the BIT on the array. The Node type is 'int'
 	auto tree = make_bit<int>(arr.begin(), arr.end());
 
 	int queryCount, l, r;
