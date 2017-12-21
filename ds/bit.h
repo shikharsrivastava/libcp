@@ -1,4 +1,4 @@
-//19:55
+
 
 #ifndef LIBCP_BIT
 #define LIBCP_BIT
@@ -13,6 +13,7 @@ class Bit
 	public:
 	// typedefs
 	typedef int size_type;
+	typedef int index_type;
 	typedef F	func_type;
 
 	private:
@@ -24,11 +25,15 @@ class Bit
 	Bit();
 	Bit(size_type n);
 	template <typename I>
-	Bit(I s, I e, func_type addFunc);
+	Bit(I s, I e, func_tyipe addFunc);
 
 
 	// Bit functions
-	void
+	void insert(index_type i, T val);
+
+	T pointQuery(index_type i);
+
+	T rangeQuery(index_type l, index_type r);
 
 };
 
