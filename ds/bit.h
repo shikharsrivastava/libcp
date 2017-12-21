@@ -1,5 +1,4 @@
 
-
 #ifndef LIBCP_BIT
 #define LIBCP_BIT
 
@@ -37,6 +36,9 @@ class Bit
 	T pointQuery(index_type i);
 	
 	T rangeQuery(index_type l, index_type r);
+
+	// Destructors
+	~Bit();
 
 };
 
@@ -98,7 +100,35 @@ T Bit<T, AF, SF>::rangeQuery(index_type l, index_type r)
 	return subFunc(pointQuery(r), pointQuery(l));
 }
 
+// Destructors
 
+template <typename T, typename AF, typename SF>
+Bit<T, AF, SF>::~Bit()
+{
+}
+
+// wrapper make_functions
+// for easy creation of bit
+// with callbacks
+// wouldn't need this in C++17 
+
+template <typename T, typename AF = std::plus<T>, typename SF = std::minus<T> >
+Bit<T, AF, SF> make_bit(AF addFunc = AF(), SF subFunc = SF())
+{
+	return Bit<T, AF, SF>(addFunc, subFunc);
+}
+
+template <typename T, typename AF = std::plus<T>, typename SF = std::minus<T> >
+Bit<T, AF, SF> make_bit(int n, AF addFunc = AF(), SF subFunc = SF())
+{
+	return Bit<T, AF, SF>(n, addFunc, subFunc);
+}
+
+template <typename T, typename I, typename AF = std::plus<T>, typename SF = std::minus<T> >
+Bit<T, AF, SF> make_bit(I s, I e, AF addFunc = AF(), SF subFunc = SF())
+{
+	return Bit<T, AF, SF>(s, e, addFunc, subFunc);
+}
 }
 }
 

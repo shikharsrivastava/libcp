@@ -183,6 +183,8 @@ SegmentTree<T, F>::~SegmentTree()
 
 /* wrapper make_ functions
  * to build tree easily
+ * with callbacks
+ * Wouldn't need this is C++17
  */
 
 template <typename T, typename F = std::plus<T>>
