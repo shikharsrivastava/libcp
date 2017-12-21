@@ -68,7 +68,8 @@ Bit<T, AF, SF>::Bit(I s, I e, add_func_type addfunc, sub_func_type subfunc)
 , addFunc(addfunc)
 , subFunc(subfunc)
 {
-	// build the bit from the iterarors
+	for(int ind = 1 ; s != e; s++, ind++)
+		update(ind, *s);
 }
 
 // Bit functions
@@ -97,6 +98,7 @@ T Bit<T, AF, SF>::pointQuery(index_type ind)
 template <typename T, typename AF, typename SF>
 T Bit<T, AF, SF>::rangeQuery(index_type l, index_type r)
 {
+	l--;
 	return subFunc(pointQuery(r), pointQuery(l));
 }
 
