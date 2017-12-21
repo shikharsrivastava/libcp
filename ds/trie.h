@@ -1,5 +1,3 @@
-//12:36
-
 #ifndef LIBCP_TRIE
 #define LIbCP_TRIE
 #include<bits/stdc++.h>
