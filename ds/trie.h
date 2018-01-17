@@ -1,5 +1,5 @@
 #ifndef LIBCP_TRIE
-#define LIbCP_TRIE
+#define LIBCP_TRIE
 #include<bits/stdc++.h>
 #include<functional>
 
@@ -9,9 +9,6 @@ namespace ds {
 template <typename T>
 class Trie {
 
-	public:
-	typedef int 	size_type;
-	typedef Node 	node_type;
 
 	private:
 	struct Node
@@ -27,6 +24,11 @@ class Trie {
 
 	};
 
+	public:
+	typedef int 	size_type;
+	typedef Node 	node_type;
+
+
 	size_type 				N;
 	std::vector<node_type>	trie;
 	size_type				object_count;
@@ -38,18 +40,18 @@ class Trie {
 	Trie(size_type n);
 
 	// Trie functions
-	template <typename I, typename F = std::equal_to<T>>
-	void insert(I s, I e, F equalFunc = F());
+	template <typename I>
+	void insert(I s, I e);
 
-	template <typename I, typename F = std::equal_to<T>>
-	void remove(I s, I e, F equalFunc = F());
+	template <typename I>
+	void remove(I s, I e);
 	
 
-	template <typename I, typename F = std::equal_to<T>>
-	bool contains(I s, I e, F euqlaFunc = F());
+	template <typename I>
+	bool contains(I s, I e);
 
-	template <typename I, typename F = std::equal_to<T>>
-	size_type count(I s, I e, F equalFunc = F());
+	template <typename I>
+	size_type count(I s, I e);
 	// Getters
 	const size_type& size();
 
@@ -85,9 +87,14 @@ Trie<T>::Trie(size_type n)
 
 // Trie functions
 
+/* 
+ * Inserts into the trie
+ * s - Iterator to begining of container
+ * e - Iterator to end of the container
+ */
 template <typename T>
-template <typename I, typename F>
-void Trie<T>::insert(I s, I e, F equalFunc)
+template <typename I>
+void Trie<T>::insert(I s, I e)
 {
 	int ind = 0;
 	while(s != e && trie[ind].next.count(*s))
@@ -108,9 +115,15 @@ void Trie<T>::insert(I s, I e, F equalFunc)
 	return;
 }
 
+/*
+ * Remove one instance from the trie
+ * s - Iterator to the begining of container
+ * e - Iterator to the end of container
+ */
+
 template <typename T>
-template <typename I, typename F>
-void Trie<T>::remove(I s, I e, F equalFunc)
+template <typename I>
+void Trie<T>::remove(I s, I e)
 {
 	if(!contains(s, e))
 		return;
@@ -126,9 +139,14 @@ void Trie<T>::remove(I s, I e, F equalFunc)
 
 }
 
+/*
+ * Checks if trie containes the iterable
+ * s - Iterator to the begining of container
+ * e - Iterator to the end of the conatiner
+ */
 template <typename T>
-template <typename I, typename F>
-bool Trie<T>::contains(I s, I e, F equalFunc)
+template <typename I>
+bool Trie<T>::contains(I s, I e)
 {
 	int ind = 0;
 	while(s != e && trie[ind].next.count(*s))
@@ -140,14 +158,25 @@ bool Trie<T>::contains(I s, I e, F equalFunc)
 	return trie[ind].finished > 0;
 
 }
-
+/*
+ * Checks the number of instances of an iterable in the trie
+ * s - Iterator to the begining of container
+ * e - Iterator to the end of the container
+ */
 template <typename T>
-template <typename I, typename F>
-typename Trie<T>::size_type Trie<T>::count(I s, I e, F equalFunc)
+template <typename I>
+typename Trie<T>::size_type Trie<T>::count(I s, I e)
 {
+	int ind = 0;
+	while(s != e && trie[ind].next.count(*s))
+	{
+		ind = trie[ind].next[*s];
+		s++;
+	}
+	return trie[ind].finished;
 }	
 
-// Deestructor
+// Destructor
 
 template <typename T>
 Trie<T>::~Trie()

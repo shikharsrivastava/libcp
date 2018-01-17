@@ -29,8 +29,8 @@ auto tree2 = make_segmentTree<Node>(arr.begin(), arr.end()-1, mergeFunc);
 // Querying the tree
 Node ans = tree1.query(5, 10);
 ```
-### BIT
-Binary indexed tree is the next data structure implemented in this library. You can read about it [here](https://www.topcoder.com/community/data-science/data-science-tutorials/binary-indexed-trees/). The use is similar to the use of Segment tree. You need to provide the Node type to be used in BIT and the add and substract functions that adds a value of type "SomeType" to the type "Node" of the Bit. Let's see its generic use. You can find easy examples [here](./ds/examples/bit.cpp).
+### BIT (Fenwik Tree)
+Binary indexed tree or Fenwick Tree is the next data structure implemented in this library. You can read about it [here](https://www.topcoder.com/community/data-science/data-science-tutorials/binary-indexed-trees/). The use is similar to the use of Segment tree. You need to provide the Node type to be used in BIT and the add and substract functions that adds a value of type "SomeType" to the type "Node" of the Bit. Let's see its generic use. You can find easy examples [here](./ds/examples/bit.cpp).
 
 ```C++
 class Node
